@@ -110,10 +110,15 @@ describe('TagReviewDialog', () => {
 		expect(prevButton()).not.toBeDisabled()
 	})
 
-	it('closes the dialog when clicking next on the last record', () => {
+	it('does not advance or close from the disabled next button on the last record', () => {
+		// NOTE: the button is disabled when on the last record, so the
+		// `hasNext ? nextRecord() : close()` close-branch is currently
+		// unreachable. Closing happens via the skip/close controls instead.
 		openDialog(2)
+		expect(nextButton()).toBeDisabled()
 		fireEvent.click(nextButton())
-		expect(useLlmTagReviewStore.getState().isOpen).toBe(false)
+		expect(useLlmTagReviewStore.getState().isOpen).toBe(true)
+		expectPage(3, 3)
 	})
 
 	it('disables navigation while an action is pending', () => {
