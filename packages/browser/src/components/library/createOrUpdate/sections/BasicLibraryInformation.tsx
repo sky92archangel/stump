@@ -27,14 +27,14 @@ export default function BasicLibraryInformation({ onSetShowDirectoryPicker }: Pr
 	const isCreatingLibrary = !ctx?.library
 	const tags = useWatch({ control: form.control, name: 'tags' })
 
-	const { t } = useTranslate()
+	const { t, translate } = useTranslate()
 	const { errors } = useFormState({
 		control: form.control,
 	})
 
 	return (
 		<>
-			<NewCard label="Details">
+			<NewCard label={translate('shared.common.details')}>
 				<NewCard.InputRow
 					label={t(getKey('name.label'))}
 					description={t(getKey('name.description'))}
@@ -61,7 +61,7 @@ export default function BasicLibraryInformation({ onSetShowDirectoryPicker }: Pr
 				<LibraryTypeSelect />
 			</NewCard>
 
-			<NewCard label="Folders">
+			<NewCard label={translate('shared.common.folders')}>
 				<NewCard.Row label={t(getKey('path.label'))} description={t(getKey('path.description'))}>
 					<div className="gap-1.5 lg:flex-1 flex w-full flex-col">
 						<InputGroup>

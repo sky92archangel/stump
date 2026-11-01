@@ -20,6 +20,7 @@ import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 
 import { usePreferences } from '@/hooks/usePreferences'
 import { useTheme } from '@/hooks/useTheme'
+import { useTranslate } from '@/hooks/useTranslate'
 
 import TablePagination from './Pagination'
 import TableFilterInput from './TableFilterInput'
@@ -55,6 +56,7 @@ export default function Table<T, V>({
 	totalCount,
 	...props
 }: TableProps<T, V>) {
+	const { t } = useTranslate()
 	const rootRef = useRef<HTMLDivElement | null>(null)
 	const viewportRef = useRef<HTMLDivElement | null>(null)
 
@@ -234,7 +236,7 @@ export default function Table<T, V>({
 								of <strong>{viewBounds.totalCount}</strong>
 							</>
 						) : (
-							'Nothing to show'
+							t('common.nothingToShow')
 						)}
 					</Text>
 
@@ -242,7 +244,7 @@ export default function Table<T, V>({
 						disabled={pageCount <= 1 && dataCount <= pageSize}
 						size="xs"
 						options={[10, 20, 30, 40, 50].map((pageSize) => ({
-							label: `Show ${pageSize} rows`,
+							label: t('common.showRowsPerPage', { pageSize }),
 							// FIXME: don't cast once my select can consume numbers :nomnom:
 							value: pageSize.toString(),
 						}))}

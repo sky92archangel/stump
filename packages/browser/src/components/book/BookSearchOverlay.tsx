@@ -2,6 +2,8 @@ import { Button, Sheet } from '@stump/components'
 import { Search } from 'lucide-react'
 import { useState } from 'react'
 
+import { useTranslate } from '@/hooks/useTranslate'
+
 import BookSearch, { type BookSearchSelection } from './BookSearch'
 
 type SheetProps = {
@@ -16,6 +18,8 @@ type Props = {
 }
 
 export default function BookSearchOverlay({ onBookSelect, sheetProps }: Props) {
+	const { t } = useTranslate()
+
 	const [isOpen, setIsOpen] = useState(false)
 
 	const renderTrigger = () => {
@@ -26,7 +30,7 @@ export default function BookSearchOverlay({ onBookSelect, sheetProps }: Props) {
 		return (
 			<Button variant="secondary" className="gap-1.5 flex h-full items-center">
 				<Search className="h-4 w-4" />
-				<span>Search for a book</span>
+				<span>{t('common.searchForABook')}</span>
 			</Button>
 		)
 	}
@@ -41,8 +45,8 @@ export default function BookSearchOverlay({ onBookSelect, sheetProps }: Props) {
 			open={isOpen}
 			onClose={() => setIsOpen(false)}
 			onOpen={() => setIsOpen(true)}
-			title="Search for a book"
-			description={sheetProps?.prompt || 'You can use the search bar below to find a book'}
+			title={t('common.searchForABook')}
+			description={sheetProps?.prompt || t('bookSearchOverlay.description')}
 			trigger={renderTrigger()}
 			size="xl"
 		>

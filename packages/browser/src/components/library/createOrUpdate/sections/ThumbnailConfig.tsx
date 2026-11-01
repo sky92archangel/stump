@@ -35,6 +35,8 @@ export default function ThumbnailConfigForm() {
 		errors: { thumbnailConfig: configErrors },
 	} = useFormState({ control: form.control })
 
+	const isCreating = !ctx?.library
+
 	const handleEnabledChange = useCallback(
 		(checked: boolean) => {
 			form.setValue('thumbnailConfig.enabled', checked)
@@ -104,10 +106,13 @@ export default function ThumbnailConfigForm() {
 	)
 
 	return (
-		<NewCard label="Generation" description={t(getKey('section.description'))}>
+		<NewCard
+			label={t(getKey(`section.heading.${isCreating ? 'create' : 'update'}`))}
+			description={t(getKey('section.description'))}
+		>
 			<NewCard.Row
 				label={translate('shared.common.enabled')}
-				description="Whether Stump should generate thumbnails when ingesting new books after a scan"
+				description={t(getKey('enableSwitch.generateDescription'))}
 			>
 				<RawSwitch checked={enabled} onCheckedChange={() => handleEnabledChange(!enabled)} />
 			</NewCard.Row>

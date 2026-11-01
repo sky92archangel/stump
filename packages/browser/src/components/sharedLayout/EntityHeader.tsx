@@ -11,6 +11,8 @@ import { EllipsisVertical, Info, Settings } from 'lucide-react'
 import { useLocation } from 'react-router'
 import { useMediaMatch } from 'rooks'
 
+import { useTranslate } from '@/hooks/useTranslate'
+
 import { BreadcrumbPageSwitcher } from '../navigation/BreadcrumbPageSwitcher'
 import { HeaderIconButton } from './HeaderIconButton'
 import { PageHeader } from './PageHeader'
@@ -55,6 +57,7 @@ export function EntityHeader({
 }: Props) {
 	const location = useLocation()
 	const isMobile = useMediaMatch('(max-width: 768px)')
+	const { translate } = useTranslate()
 
 	const isSettingsActive = settingsLink ? location.pathname.includes(settingsLink) : false
 	const activeTab =
@@ -121,7 +124,13 @@ export function EntityHeader({
 			</PageHeader.Start>
 
 			<PageHeader.End>
-				{onInfoClick && <HeaderIconButton label="Info" icon={Info} onClick={onInfoClick} />}
+				{onInfoClick && (
+					<HeaderIconButton
+						label={translate('shared.common.info')}
+						icon={Info}
+						onClick={onInfoClick}
+					/>
+				)}
 
 				{!isMobile && tabs.length > 0 && (
 					<Tabs value={activeTab} size="sm">
@@ -139,7 +148,7 @@ export function EntityHeader({
 
 				{settingsLink && (
 					<HeaderIconButton
-						label="Settings"
+						label={translate('shared.common.settings')}
 						icon={Settings}
 						to={settingsLink}
 						isActive={isSettingsActive}
