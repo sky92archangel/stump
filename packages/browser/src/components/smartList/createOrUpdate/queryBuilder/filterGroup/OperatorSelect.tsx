@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 import { match } from 'ts-pattern'
 
+import { useTranslate } from '@/hooks/useTranslate'
+
 import {
 	ConceptualOperation,
 	isConceptualField,
@@ -26,6 +28,7 @@ type FieldDef = SmartListFormSchema['filters']['groups'][number]['filters'][numb
 
 export default function OperatorSelect({ idx }: Props) {
 	const { groupIdx } = useFilterGroupContext()
+const { t, translate } = useTranslate()
 
 	const form = useFormContext<SmartListFormSchema>()
 
@@ -76,13 +79,13 @@ export default function OperatorSelect({ idx }: Props) {
 
 		return [
 			{
-				label: isConceptual ? 'Match' : 'Equality',
+				label: isConceptual ? t('createOrUpdateSmartListForm.operator.groups.match') : t('createOrUpdateSmartListForm.operator.groups.equality'),
 				operators: operators,
 			},
 			...(!isDateField(fieldDef.field) && !isConceptual
 				? [
 						{
-							label: 'List',
+							label: translate('shared.common.list'),
 							operators: arrayGroup,
 						},
 					]
@@ -112,7 +115,9 @@ export default function OperatorSelect({ idx }: Props) {
 						{ 'text-muted-foreground': !fieldDef.operation },
 					)}
 				>
-					{operatorMap[fieldDef.operation] || 'Operator'}
+					{fieldDef.operation
+						? t(`createOrUpdateSmartListForm.operator.ops.${fieldDef.operation}`)
+						: t('createOrUpdateSmartListForm.operator.placeholder')}
 					<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 				</Button>
 			</Popover.Trigger>
@@ -134,7 +139,7 @@ export default function OperatorSelect({ idx }: Props) {
 										})}
 										value={operator}
 									>
-										{operatorMap[operator]}
+										{t(`createOrUpdateSmartListForm.operator.ops.${operator}`)}
 									</Command.Item>
 								))}
 							</Command.Group>
@@ -152,20 +157,3 @@ const operatorGroups = {
 	string: ['contains', 'excludes', 'neq', 'eq'] satisfies StringOperation[],
 }
 
-const operatorMap: Record<Operation, string> = {
-	anyOf: 'any in list',
-	contains: 'contains string',
-	eq: 'equal to',
-	excludes: 'excludes string',
-	is: 'is',
-	isNot: 'is not',
-	isAnyOf: 'is any of',
-	isNoneOf: 'is none of',
-	gt: 'greater than',
-	gte: 'greater than or equal to',
-	lt: 'less than',
-	lte: 'less than or equal to',
-	noneOf: 'none in list',
-	neq: 'not equal to',
-	range: 'in range',
-}

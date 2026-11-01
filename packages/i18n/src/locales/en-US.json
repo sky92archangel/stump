@@ -302,6 +302,14 @@
         "discord": "Discord",
         "github": "GitHub"
       },
+      "textCase": {
+        "label": "Text Case",
+        "options": {
+          "lowerCase": "Lowercase",
+          "sentenceCase": "Sentence Case",
+          "titleCase": "Title Case"
+        }
+      },
       "supportInfo": {
         "buildInformation": "Build Information",
         "version": "Version: {{version}}",
@@ -380,6 +388,19 @@
       }
     },
     "bookManagementScene": {
+      "tagsDescription": "Assign tags to this book",
+      "analysis": "Analysis",
+      "thumbnail": "Thumbnail",
+      "heading": "Manage",
+      "description": "Make changes to this book",
+      "underDevelopment": "Book management is currently under development and has very limited functionality",
+      "analysisDescription": "Re-analyze this book to update metadata from its file",
+      "analyzeButton": "Analyze Media",
+      "analyzeTooltip": "Analyze this book",
+      "analysisInProgress": "Analysis already in progress",
+      "thumbnailDescription": "Change the cover image for this book",
+      "metadata": "Metadata",
+      "metadataDescription": "Extra information about this book",
       "metadataSearch": {
         "heading": "Search Metadata",
         "description": "Search an external provider for this book and choose a match to apply",
@@ -431,6 +452,27 @@
             "noFilterMatch": "No devices match the filter"
           }
         }
+      },
+      "metadata": "Metadata",
+      "actions": {
+        "continueReading": "Continue reading",
+        "readFromBeginning": "Read from beginning",
+        "incognitoMode": "Incognito mode",
+        "nativePdfViewer": "Native PDF viewer",
+        "manage": "Manage",
+        "email": "Email",
+        "read": "Read",
+        "readAgain": "Read again"
+      },
+      "toasts": {
+        "failedToUpdateCompletion": "Failed to update book completion status",
+        "failedToDeleteCurrentSession": "Failed to delete current session",
+        "failedToDeleteReadHistory": "Failed to delete read history"
+      },
+      "deleteHistoryConfirmation": {
+        "title": "Delete reading history",
+        "description": "Are you sure you want to delete your reading history?",
+        "warning": "Your completion history cannot be recovered once deleted"
       },
       "nextInSeries": "Next in Series"
     },
@@ -522,11 +564,15 @@
           }
         ],
         "review": {
+          "yes": "Yes",
+          "no": "No",
+          "none": "None",
           "labels": {
             "name": "Name",
             "description": "Description"
           }
         },
+        "createClub": "Create club",
         "submit": "Create Book Club"
       }
     },
@@ -557,11 +603,20 @@
       },
       "members": {
         "title": "Members",
+        "removeConfirmation": {
+          "description": "Are you sure you want to remove this member?",
+          "title": "Remove member"
+        },
         "description": "Manage the members of this book club"
       },
       "roles": {
         "title": "Roles",
         "description": "Customize the roles in this book club",
+        "customNames": {
+          "description": "You can override the default name for any role. This is purely cosmetic and will not affect permissions",
+          "heading": "Custom names",
+          "showAs": "Show as"
+        },
         "sections": {
           "roleMappings": {
             "heading": "Existing Role Mappings",
@@ -587,6 +642,14 @@
               "Permanently delete this book club and all its contents.",
               "This action cannot be undone"
             ],
+            "errors": {
+              "failedToDelete": "Failed to delete book club"
+            },
+            "confirmation": {
+              "title": "Delete book club",
+              "description": "Are you sure you want to delete this club? This action cannot be undone.",
+              "confirm": "Delete club"
+            },
             "trigger": "Delete Club"
           }
         }
@@ -650,6 +713,7 @@
           },
           "enableSwitch": {
             "label": "Enabled",
+            "generateDescription": "Whether Stump should generate thumbnails when ingesting new books after a scan",
             "description": "Generate thumbnail images for this library"
           },
           "resizeMethod": {
@@ -663,6 +727,9 @@
           },
           "scaleEvenlyByFactor": {
             "label": "Scale Factor",
+            "factor": {
+              "label": "Scale Factor"
+            },
             "description": "Scale the thumbnail by a factor of the original size"
           },
           "exact": {
@@ -677,6 +744,9 @@
           "scaleDimension": {
             "label": "Auto Scaled",
             "description": "Set the exact size of one dimension and auto-scale the other",
+            "size": {
+              "label": "Size"
+            },
             "dimension": {
               "label": "Dimension",
               "options": {
@@ -689,6 +759,18 @@
             "description": "The format and quality to use for the image (1-100)",
             "format": "Format",
             "quality": "Quality"
+          },
+          "format": {
+            "label": "Image Format",
+            "description": "The format of the generated thumbnail images"
+          },
+          "quality": {
+            "label": "Quality",
+            "description": "The quality of the generated thumbnail images, between 1 and 100"
+          },
+          "colors": {
+            "label": "Thumbnail colors",
+            "description": "Extract dominant colors for thumbnails. This is used for thumbnail placeholders and accent colors"
           },
           "thumbnailColors": {
             "label": "Thumbnail Colors",
@@ -779,6 +861,53 @@
             }
           }
         },
+        "defaultLibraryView": {
+          "skipBookOverview": {
+            "label": "Skip Book Overview",
+            "description": "Open the reader directly when selecting books in this library"
+          },
+          "label": "Default Library View",
+          "description": "Configure which tab is shown by default when opening this library",
+          "hideSeriesView": {
+            "label": "Hide Series Tab",
+            "description": "Hide the series tab from the library navigation"
+          },
+          "options": {
+            "books": {
+              "label": "Books",
+              "description": "Show the books tab by default"
+            },
+            "series": {
+              "label": "Series",
+              "description": "Show the series tab by default"
+            }
+          }
+        },
+        "libraryPattern": {
+          "options": {
+            "label": "Library Pattern",
+            "description": "The setting which determines how Stump will organize your library",
+            "collectionPriority": {
+              "label": "Collection Priority",
+              "description": "Each folder at the top-most level of the library root is a single series"
+            },
+            "seriesPriority": {
+              "label": "Series Priority",
+              "description": "Each folder at any level recursively is a single series"
+            }
+          },
+          "section": {
+            "heading": "Organization",
+            "docs": [
+              "Not sure which to choose? Click",
+              "here",
+              "for more information.",
+              "You cannot change this setting later"
+            ],
+            "disabled": "You cannot change this setting",
+            "description": "Identify which pattern most closely matches the organization of your library"
+          }
+        },
         "viewOptions": {
           "label": "View Options",
           "defaultTab": {
@@ -805,6 +934,17 @@
           "update": "Scan After Updates"
         },
         "description": "Index the library files to populate your database"
+      },
+      "validation": {
+        "missingName": "Library name is required",
+        "nameTaken": "You already have a library named {{name}}.",
+        "missingPath": "Library path is required",
+        "pathTaken": "This path is taken by an existing library",
+        "pathParent": "This path is a parent directory of an existing library",
+        "pathChild": "This path is a sub-directory of an existing library",
+        "invalidGlob": "Invalid glob pattern",
+        "factorRange": "Factor must be between 0 and 1",
+        "qualityRange": "Thumbnail quality must be between 0 and 100"
       },
       "errors": {
         "failedToUpdate": "Failed to Update Library",
@@ -839,6 +979,9 @@
           }
         ],
         "review": {
+          "yes": "Yes",
+          "no": "No",
+          "none": "None",
           "labels": {
             "generateThumbnails": "Generate Thumbnails",
             "processThumbnailColors": "Process Thumbnail Colors",
@@ -863,9 +1006,14 @@
             "scaleDimension": "Explicitly Sized"
           }
         },
+        "createLibrary": "Create library",
         "buttons": {
           "confirm": "Create Library"
         }
+      },
+      "subtitleLink": "relevant documentation",
+      "errors": {
+        "createFailed": "Failed to create library"
       },
       "failedToCreateLibrary": "Failed to Create Library"
     },
@@ -898,6 +1046,14 @@
           "books": "Drag and drop books here",
           "series": "Drag and drop a zip file here",
           "alt": "Or click to browse your computer for books to upload"
+        },
+        "seriesDirNameDescription": "This will be used as the name of the series directory. Your zip archive will be unpacked here.",
+        "seriesNamePlaceholder": "Enter series name",
+        "toasts": {
+          "uploadBooksFailed": "Failed to upload book(s)",
+          "uploadBooksSuccess": "Successfully uploaded file(s)",
+          "uploadSeriesFailed": "Failed to upload series",
+          "uploadSeriesSuccess": "Successfully uploaded series"
         },
         "addedFiles": "Added Files"
       }
@@ -937,6 +1093,7 @@
       "basics": {
         "title": "Basic Information",
         "description": "The details of this library, including its name, path, and description",
+        "updateLibrary": "Update library",
         "form": {
           "submit": "Update Library"
         }
@@ -1015,11 +1172,56 @@
       },
       "options/thumbnails": {
         "title": "Thumbnails",
+        "sections": {
+          "management": {
+            "regenerateThumbnails": {
+              "heading": "Regenerate thumbnails",
+              "trigger": "Generate thumbnails",
+              "missingOnly": "Create missing only",
+              "forceRecreateAll": "Force recreate all",
+              "description": "Either generate missing thumbnails or force the recreation of all thumbnails"
+            },
+            "heading": "Manage Thumbnails",
+            "description": "Manage the existing thumbnails for this library",
+            "processThumbnailColors": {
+              "heading": "Process thumbnail colors",
+              "description": "Extract missing thumbnail color metadata or force the regeneration of it for all thumbnails",
+              "trigger": "Extract colors",
+              "missingOnly": "Missing only",
+              "reprocessAll": "Reprocess all"
+            },
+            "selectThumbnail": {
+              "description": "Choose a different thumbnail for this library, either from a book or upload a custom one",
+              "librarySeriesDescription": "Select a series from the library"
+            },
+            "deleteThumbnails": {
+              "confirmation": {
+                "title": "Delete library thumbnails",
+                "confirm": "Delete thumbnails",
+                "text": "Are you sure you want to delete all thumbnails for this library?"
+              },
+              "description": "Remove all generated thumbnails for this library",
+              "toasts": {
+                "success": "Library thumbnails deleted",
+                "error": "An error occurred while deleting the library thumbnails"
+              },
+              "heading": "Delete thumbnails",
+              "trigger": "Delete thumbnails",
+              "warning": {
+                "description": "Deleting the library thumbnails will remove all generated images and you will have to manually regenerate them"
+              }
+            }
+          }
+        },
         "description": "Settings and management options for thumbnails in this library"
       },
       "integrations/analysis": {
         "title": "Analysis",
         "description": "Analyze the contents of this library to identify potential issues or improvements",
+        "workInProgress": {
+          "title": "Work in progress",
+          "description": "This page has limited functionality and is a work in progress"
+        },
         "sections": {
           "analyzeBooks": {
             "heading": "Analyze Books",
@@ -1044,6 +1246,53 @@
         "title": "Metadata",
         "description": "Manage and review metadata matches for this library",
         "sections": {
+          "llmTagging": {
+            "heading": "AI Tagging",
+            "description": "Ask your configured LLM to suggest tags for books in this library. Suggestions await your review before anything is applied.",
+            "notConfigured": {
+              "title": "LLM is not configured",
+              "description": "Set up an LLM URL, model name, and API key in the server settings to use AI tagging."
+            },
+            "runButton": "Run AI tagging",
+            "acceptAll": "Accept all",
+            "rejectAll": "Reject all",
+            "pendingCount_one": "{{count}} pending suggestion",
+            "pendingCount_other": "{{count}} pending suggestions",
+            "toasts": {
+              "jobQueued": "AI tagging job queued",
+              "notConfigured": "AI tagging is not configured",
+              "jobFailed": "Failed to queue AI tagging job"
+            }
+          },
+          "libraryTagAnalysis": {
+            "heading": "AI Tag Analysis",
+            "description": "Analyze the whole library in batches to build a global tag vocabulary and per-book tag suggestions. Review and apply the result when it finishes.",
+            "progress": "Batch {{completed}} of {{total}}",
+            "summary": "{{books}} book(s) analyzed, {{tags}} tags in vocabulary",
+            "applyReady": {
+              "title": "Analysis ready for review",
+              "description": "Applying the suggestions only ever adds tags to your books; existing tags are never removed."
+            },
+            "status": {
+              "IN_PROGRESS": "In progress",
+              "RATE_LIMITED": "Rate limited",
+              "AWAITING_REVIEW": "Awaiting review",
+              "APPLIED": "Applied",
+              "FAILED": "Failed"
+            },
+            "runButton": "Run analysis",
+            "resumeButton": "Resume analysis",
+            "restartButton": "Restart from scratch",
+            "applyButton": "Apply suggestions",
+            "toasts": {
+              "jobQueued": "Analysis job queued",
+              "notConfigured": "AI tagging is not configured",
+              "jobFailed": "Failed to queue analysis job",
+              "applied_one": "Applied suggestions to {{count}} book",
+              "applied_other": "Applied suggestions to {{count}} books",
+              "applyFailed": "Failed to apply suggestions"
+            }
+          },
           "fetchMetadata": {
             "heading": "Fetch Metadata",
             "description": "Fetch metadata for the media in this library",
@@ -1101,6 +1350,7 @@
           },
           "deleteLibrary": {
             "heading": "Delete Library",
+            "deleteButton": "Delete library",
             "description": [
               "Permanently delete this library and all its contents.",
               "This action cannot be undone"
@@ -1143,6 +1393,21 @@
         "label": "Extension",
         "any": "Any"
       },
+      "labels": {
+        "character": "Character",
+        "continuing": "Continuing",
+        "editor": "Editor",
+        "ended": "Ended",
+        "inker": "Inker",
+        "letterer": "Letterer",
+        "onlyFromSeries": "Only show options available from series",
+        "penciller": "Penciller",
+        "genre": "Genre",
+        "colorist": "Colorist",
+        "publisher": "Publisher",
+        "status": "Status",
+        "writer": "Writer"
+      },
       "readStatusSelect": {
         "label": "Read Status",
         "options": {
@@ -1155,6 +1420,30 @@
     "metadataEditor": {
       "addFields": {
         "description": "Add each addition on its own line"
+      },
+      "resetMetadata": {
+        "deleteButton": "Delete metadata",
+        "impact": {
+          "books": {
+            "description": "Remove all the metadata for books in this series"
+          },
+          "everything": {
+            "label": "Everything",
+            "description": "Remove all the metadata for everything related to this series"
+          },
+          "series": {
+            "description": "Remove only this series' metadata"
+          }
+        },
+        "selectImpact": "Select the impact for the deletion",
+        "title": "Delete metadata",
+        "warning": {
+          "description": "This will permanently delete all metadata for the selected items. You will need to trigger a custom scan to regenerate the metadata"
+        }
+      },
+      "toasts": {
+        "lockedFieldsUpdateFailed": "Failed to update locked fields",
+        "updateFailed": "Failed to update metadata"
       },
       "actions": {
         "removeItem": "Remove Item",
@@ -1208,6 +1497,40 @@
           "undoManualEdit": "Undo Manual Edit"
         }
       },
+      "reviewMatch": "Review match",
+      "llmTagging": {
+        "queue": {
+          "columns": {
+            "book": "Book",
+            "tags": "Suggested tags",
+            "actions": "Actions"
+          },
+          "review": "Review",
+          "reject": "Reject",
+          "moreRecords_one": "{{count}} more record not shown",
+          "moreRecords_other": "{{count}} more records not shown"
+        },
+        "reviewDialog": {
+          "heading": "Review AI tag suggestions",
+          "previous": "Previous",
+          "next": "Next",
+          "skipAll": "Close",
+          "reject": "Reject",
+          "accept": "Accept",
+          "acceptSelected_one": "Accept {{count}} tag",
+          "acceptSelected_other": "Accept {{count}} tags"
+        },
+        "toasts": {
+          "accepted": "Tags applied",
+          "rejected": "Suggestions rejected",
+          "acceptedAll_one": "Applied suggestions for {{count}} book",
+          "acceptedAll_other": "Applied suggestions for {{count}} books",
+          "rejectedAll_one": "Rejected suggestions for {{count}} book",
+          "rejectedAll_other": "Rejected suggestions for {{count}} books",
+          "acceptFailed": "Failed to apply suggestions",
+          "rejectFailed": "Failed to reject suggestions"
+        }
+      },
       "matchesTable": {
         "columns": {
           "entityName": "Name",
@@ -1231,6 +1554,10 @@
       }
     },
     "seriesOverviewScene": {
+      "completeSeriesConfirmation": {
+        "title": "Mark series completed",
+        "description": "Are you sure you want to mark every book in this series completed?"
+      },
       "buttons": {
         "downloadSeries": "Download Series"
       }
@@ -1272,6 +1599,35 @@
       "validation": {
         "nameTooShort": "Name must be at least 2 characters",
         "nameTaken": "Cannot use this name"
+      },
+      "operator": {
+        "groups": {
+          "equality": "Equality",
+          "list": "List",
+          "match": "Match"
+        },
+        "ops": {
+          "isNot": "is not",
+          "isAnyOf": "is any of",
+          "isNoneOf": "is none of",
+          "contains": "contains string",
+          "excludes": "excludes string",
+          "eq": "equal to",
+          "neq": "not equal to",
+          "gt": "greater than",
+          "gte": "greater than or equal to",
+          "lt": "less than",
+          "lte": "less than or equal to",
+          "range": "in range",
+          "anyOf": "any in list",
+          "noneOf": "none in list",
+          "is": "is"
+        },
+        "placeholder": "Operator"
+      },
+      "rawFilters": {
+        "description": "View the raw JSON representation of the filters",
+        "show": "Show JSON"
       },
       "fields": {
         "name": {
@@ -1446,6 +1802,9 @@
           }
         ],
         "review": {
+          "yes": "Yes",
+          "no": "No",
+          "none": "None",
           "labels": {
             "name": "Name",
             "description": "Description",
@@ -1453,6 +1812,7 @@
             "grouping": "Group By"
           }
         },
+        "createList": "Create list",
         "buttons": {
           "confirm": "Create List"
         }
@@ -1538,6 +1898,7 @@
         "description": "Control who can access this smart list",
         "sections": {
           "visibility": {
+            "changeVisibility": "Change visibility",
             "confirmation": {
               "public": "This will make the list visible to everyone",
               "private": "This will change the list to be private, hiding it from anyone who previously had access",
@@ -1675,6 +2036,7 @@
           "metadata": "Metadata",
           "notifications": "Notifications",
           "tags": "Tags",
+          "llm": "LLM",
           "label": "Management"
         }
       },
@@ -1715,6 +2077,17 @@
             "buttons": {
               "confirm": "Save Changes"
             }
+          },
+          "locale": {
+            "localeSelector": {
+              "label": "语言"
+            },
+            "heading": "语言及地区",
+            "subtitle": [
+              "Stump 支持多种语言和本地化，在下方设置您的偏好。请考虑帮助提升质量",
+              "Stump 的翻译",
+              "如果你可以！"
+            ]
           },
           "language": {
             "label": "Language",
@@ -1929,6 +2302,35 @@
             "label": "Reading Session Grace Period",
             "description": "If no activity is detected within this time frame, in seconds, the next update will start a new session"
           },
+          "debugSettings": {
+            "label": "Debug settings",
+            "description": "These won't exist in production, but are useful for debugging",
+            "queryTools": {
+              "description": "Enable debugging tools for queries",
+              "label": "Query Tools"
+            }
+          },
+          "primaryNavigation": {
+            "label": "Primary Navigation",
+            "description": "Choose between a minimal sidebar or a topbar navigation",
+            "options": {
+              "sidebar": "Sidebar",
+              "topbar": "Topbar"
+            },
+            "disclaimer": "* Settings for the unselected option will be disabled or hidden"
+          },
+          "doubleSidebar": {
+            "label": "Settings Sidebar",
+            "description": "Enables sidebar navigation for the settings pages"
+          },
+          "replacePrimarySidebar": {
+            "label": "Replace Primary Sidebar",
+            "description": "Any instance of a secondary sidebar will replace the primary sidebar instead of stacking them",
+            "tooltips": {
+              "doubleSidebar": "This setting requires the settings sidebar to be enabled",
+              "topbar": "This setting is not currently supported when the primary navigation is set to top bar"
+            }
+          },
           "homeArrangement": {
             "title": "Home Page",
             "description": "Adjust the sections on your home page",
@@ -1982,6 +2384,11 @@
               "savedConfirm": "I Saved My Key",
               "submit": "Create Key"
             }
+          },
+          "deleteKey": {
+            "confirm": "Delete key",
+            "description": "Anything using this key will immediately lose authentication",
+            "title": "Delete API key"
           },
           "table": {
             "title": "Your Keys",
@@ -2097,6 +2504,7 @@
               "description": "Display your Stump activity in Discord using Discord Rich Presence",
               "reconnect": "Reconnect to Discord"
             },
+            "description": "管理桌面版应用独有的可选功能",
             "restartRequired": {
               "title": "Restart Required",
               "description": "Changes were made that require a restart of the app to take effect"
@@ -2118,6 +2526,16 @@
               "updateFailed": "Failed to update the URL"
             }
           },
+          "stats": {
+            "libraries": "Libraries",
+            "books": "Books",
+            "diskUsage": "Disk usage",
+            "series": "Series"
+          },
+          "serverPublicUrl": {
+            "label": "公共 URL",
+            "description": "如果适用，你的服务器从外部网络可访问的 URL。这将启用邀请链接和其他功能"
+          },
           "customEmojis": {
             "title": "Emojis",
             "description": "See and manage custom image emojis for your server",
@@ -2134,6 +2552,9 @@
             "invalidName": "Please enter a valid name for your emoji",
             "uploadError": "Failed to upload emoji",
             "renameError": "Failed to rename emoji",
+            "uploadSuccess": "Emoji 已上传",
+            "renameSuccess": "Emoji 已重命名",
+            "deleteSuccess": "Emoji 已删除",
             "deleteError": "Failed to delete emoji"
           }
         }
@@ -2150,6 +2571,7 @@
               "columns": {
                 "level": "Level",
                 "message": "Message",
+                "jobId": "Job ID",
                 "timestamp": "Timestamp"
               },
               "emptyHeading": "No Logs to Display",
@@ -2172,6 +2594,14 @@
         "helmet": "Jobs",
         "title": "Jobs",
         "description": "Background jobs that run on your Stump server instance",
+        "status": {
+          "COMPLETED": "Completed",
+          "CANCELLED": "Cancelled",
+          "FAILED": "Failed",
+          "RUNNING": "Running",
+          "QUEUED": "Queued",
+          "PAUSED": "Paused"
+        },
         "sections": {
           "scheduling": {
             "title": "Scheduled Jobs",
@@ -2244,6 +2674,7 @@
               "deleteSuccess": "Scheduled job deleted",
               "deleteError": "Failed to delete scheduled job"
             },
+            "newScheduledJob": "新建计划任务",
             "errors": {
               "invalidCron": "Schedule must be a valid cron expression"
             }
@@ -2268,6 +2699,14 @@
               "title": "Job Details",
               "description": "The raw output of this job and any associated logs",
               "associatedLogs": "Associated Logs"
+            },
+            "status": {
+              "QUEUED": "Queued",
+              "RUNNING": "Running",
+              "PAUSED": "Paused",
+              "COMPLETED": "Completed",
+              "CANCELLED": "Cancelled",
+              "FAILED": "Failed"
             },
             "deleteJobHistory": {
               "title": "Delete Job History",
@@ -2457,9 +2896,72 @@
             "usernameAlreadyExists": "Username already exists"
           },
           "createSubmitButton": "Create User",
+          "accountDetails": {
+            "description": "They can change these values at any time",
+            "generatePassword": "Generate Random Password",
+            "heading": "Account details"
+          },
+          "maxSessionsAllowed": {
+            "label": "Max sessions allowed",
+            "description": "The maximum number of valid sessions allowed at a time. If a user tries to log in once this limit is reached, the oldest session will be invalidated."
+          },
           "updateSubmitButton": "Update User"
         },
+        "userTable": {
+          "actions": {
+            "clearSessions": "Clear sessions",
+            "lockAccount": "Lock account",
+            "delete": "Delete",
+            "inspect": "Inspect",
+            "edit": "Edit",
+            "unlockAccount": "Unlock account"
+          },
+          "deleteUser": {
+            "confirm": "Delete User",
+            "description": "Are you sure you want to delete this user? If you select the hard delete option, this user and all of their data will be permanently deleted.",
+            "hardDelete": "Hard Delete User",
+            "title": "Delete User Account"
+          },
+          "existingAccounts": {
+            "description": "A list of all existing accounts on the server",
+            "heading": "Existing accounts"
+          },
+          "inspectUser": {
+            "description": "Inspect a user's information and configuration",
+            "heading": "Inspect user",
+            "json": "JSON"
+          },
+          "sessionsTooltip": "The number of non-expired login sessions for this user",
+          "sessions": "Sessions",
+          "table": {
+            "active": "Active",
+            "createdAt": "Created at",
+            "lastLogin": "Last login",
+            "locked": "Locked",
+            "role": "Role",
+            "never": "Never",
+            "user": "User",
+            "status": "Status",
+            "member": "Member",
+            "serverOwner": "Server Owner"
+          }
+        },
         "loginActivity": {
+          "columns": {
+            "authResult": "Auth result",
+            "failure": "Failure",
+            "ipAddress": "IP address",
+            "success": "Success",
+            "user": "User",
+            "timestamp": "Timestamp",
+            "userAgent": "User-agent"
+          },
+          "description": "All login attempts are logged and stored for security purposes",
+          "empty": {
+            "description": "You cleared this, didn't you?",
+            "heading": "No login activity"
+          },
+          "heading": "Authentication history",
           "deleteConfirmation": {
             "title": "Delete Activity",
             "description": "All records of login activity will be permanently deleted from the database",
@@ -2479,6 +2981,7 @@
             "list": {
               "emptyHeading": "No SMTP Emailers Configured",
               "primaryEmailer": "Primary Emailer",
+              "createEmailer": "Create an emailer",
               "sendHistory": {
                 "heading": "Send History",
                 "description": "A record of emails sent from this emailer",
@@ -2491,6 +2994,7 @@
                   }
                 },
                 "emptyHeading": "No History",
+                "notFound": "Not Found",
                 "emptySubtitle": "The history of this emailer is empty. It has either not been used or the history has been cleared"
               }
             }
@@ -2519,6 +3023,14 @@
               "submit": {
                 "create": "Create Device Alias",
                 "update": "Update Device Alias"
+              }
+            },
+            "deleteDevice": {
+              "confirm": "Delete device",
+              "description": "Are you sure you want to delete this device?",
+              "title": "Delete device",
+              "toasts": {
+                "error": "Failed to delete device"
               }
             },
             "table": {
@@ -2666,9 +3178,127 @@
         "editDialog": {
           "tooltip": "Edit Provider"
         },
+        "chooseProvider": "Choose provider",
+        "description": "Configure metadata providers used to fetch and enrich book metadata for your libraries",
         "deleteDialog": {
           "title": "Delete Provider",
           "description": "Are you sure you want to delete {{providerName}}? This action cannot be undone."
+        }
+      },
+      "server/llm": {
+        "helmet": "LLM Settings",
+        "title": "LLM",
+        "description": "Configure an LLM provider for AI-powered features",
+        "sections": {
+          "llm": {
+            "url": {
+              "label": "URL",
+              "description": "Base URL of the LLM API endpoint"
+            },
+            "apiKey": {
+              "label": "API Key",
+              "description": "Stored encrypted, write-only"
+            },
+            "modelName": {
+              "label": "Model Name",
+              "description": "e.g. gpt-4o, deepseek-chat"
+            },
+            "updateFailed": "Failed to update LLM configuration",
+            "updateSuccess": "LLM configuration updated",
+            "connection": {
+              "heading": "LLM Connection"
+            },
+            "tagging": {
+              "heading": "Automatic tagging",
+              "description": "Enable and configure LLM-powered tagging for books in your libraries",
+              "updateFailed": "Failed to update automatic tagging configuration",
+              "updateSuccess": "Automatic tagging configuration updated",
+              "fields": {
+                "autoApplyThreshold": {
+                  "label": "Auto-apply threshold",
+                  "description": "Automatically apply suggestions whose confidence meets this threshold (0 to disable)"
+                },
+                "requestsPerSecond": {
+                  "label": "Requests per second",
+                  "description": "Rate limit for LLM API calls"
+                },
+                "concurrency": {
+                  "label": "Concurrent requests",
+                  "description": "Number of parallel LLM API calls"
+                },
+                "dailyRequestLimit": {
+                  "label": "Daily request limit",
+                  "description": "Max LLM requests per day; excess tasks are retried later"
+                },
+                "batchSize": {
+                  "label": "Batch size",
+                  "description": "Number of books per LLM request in library analysis"
+                },
+                "maxSummaryChars": {
+                  "label": "Summary truncation length",
+                  "description": "Max characters of book summary sent to the LLM"
+                },
+                "batchScope": {
+                  "newBooksOnly": "New books only",
+                  "allBooks": "All books",
+                  "NewBooksOnly": "New books only",
+                  "AllBooks": "All books",
+                  "label": "Scope",
+                  "description": "Which books to analyze when tagging"
+                },
+                "allBooks": "All books",
+                "newBooksOnly": "New books only",
+                "enabled": {
+                  "label": "Enable automatic tagging"
+                }
+              }
+            }
+          },
+          "tagging": {
+            "heading": "Automatic tagging",
+            "description": "Enable and configure LLM-powered tagging for books in your libraries",
+            "updateFailed": "Failed to update automatic tagging configuration",
+            "updateSuccess": "Automatic tagging configuration updated",
+            "fields": {
+              "autoApplyThreshold": {
+                "label": "Auto-apply threshold",
+                "description": "Automatically apply suggestions whose confidence meets this threshold (0 to disable)"
+              },
+              "requestsPerSecond": {
+                "label": "Requests per second",
+                "description": "Rate limit for LLM API calls"
+              },
+              "concurrency": {
+                "label": "Concurrent requests",
+                "description": "Number of parallel LLM API calls"
+              },
+              "dailyRequestLimit": {
+                "label": "Daily request limit",
+                "description": "Max LLM requests per day; excess tasks are retried later"
+              },
+              "batchSize": {
+                "label": "Batch size",
+                "description": "Number of books per LLM request in library analysis"
+              },
+              "maxSummaryChars": {
+                "label": "Summary truncation length",
+                "description": "Max characters of book summary sent to the LLM"
+              },
+              "batchScope": {
+                "newBooksOnly": "New books only",
+                "allBooks": "All books",
+                "NewBooksOnly": "New books only",
+                "AllBooks": "All books",
+                "label": "Scope",
+                "description": "Which books to analyze when tagging"
+              },
+              "allBooks": "All books",
+              "newBooksOnly": "New books only",
+              "enabled": {
+                "label": "Enable automatic tagging"
+              }
+            }
+          }
         }
       },
       "server/tags": {
@@ -2724,6 +3354,7 @@
         "create": "Once you create a library, content will start showing up here",
         "wait": "Once a library is created, content will start showing up here"
       },
+      "messagePrefix": "You can't see what you don't have",
       "links": {
         "create": "Create Library",
         "settings": "Go to Settings"
@@ -2752,6 +3383,7 @@
       },
       "libraryOptions": {
         "manageLibrary": "Settings",
+        "scanLibrary": "Scan",
         "deleteLibrary": "Delete"
       }
     },
@@ -2792,6 +3424,195 @@
         "uploadFailed": "Failed to upload image",
         "updateFailed": "Failed to update thumbnail"
       }
+    },
+    "bookClub": {
+      "books": {
+        "createSchedule": "Create a schedule",
+        "hidePastBooks": "Hide past books",
+        "noBooksScheduled": "The club has no books scheduled",
+        "noBooksToDisplay": "No books to display",
+        "heading": "Books",
+        "showPastBooks": "Show past books"
+      },
+      "clubs": {
+        "active": "Active",
+        "explorePublic": "Explore public book clubs",
+        "goToClub": "Go to club",
+        "inactive": "Inactive",
+        "notAMember": "You are not a member of any book clubs",
+        "memberCount_one": "{{count}} member",
+        "memberCount_other": "{{count}} members",
+        "yourClubs": "Your clubs"
+      },
+      "nav": {
+        "home": "Home",
+        "discussion": "Discussion",
+        "members": "Members",
+        "settings": "Settings"
+      },
+      "scheduler": {
+        "addExternalBook": "Add an external book",
+        "addExternalBookDescription": "If you want to add a book that isn't in your library, you can add information about it here",
+        "andThen": "AND THEN",
+        "bookUrl": "Book URL",
+        "booksToAdd": "Books to add",
+        "configureDates": "Configure the dates",
+        "configureDatesDescription": "If not provided, the start and end dates will be set to a reasonable default based on the last book's end date",
+        "endDate": "End date",
+        "pickABook": "Pick a book",
+        "pickABookDescription": "You can add a book from your library",
+        "removeSelection": "Remove selection",
+        "author": "Author",
+        "startDate": "Start date"
+      }
+    },
+    "bookSearchOverlay": {
+      "description": "You can use the search bar below to find a book"
+    },
+    "cardList": {
+      "empty": {
+        "noResultsReturned": "No results were returned",
+        "noResultsToDisplay": "No results present to display"
+      }
+    },
+    "common": {
+      "addBooks": "Add books",
+      "addSeries": "Add series",
+      "bookColumns": "Book columns",
+      "brightness": "Brightness",
+      "cannotBeUndone": "This cannot be undone",
+      "clickHere": "Click here",
+      "configureColumns": "Configure columns",
+      "experimentalAnimatedReader": "Experimental animated reader",
+      "filter": "Filter",
+      "filterData": "Filter data",
+      "filterOptions": "Filter options",
+      "folderEmpty": "This folder is empty",
+      "goHome": "Go home",
+      "groupColumns": "Group columns",
+      "hidden": "Hidden",
+      "lastVisited": "Last visited",
+      "missing": "Missing",
+      "noFiles": "No files",
+      "noMetadata": "No Metadata",
+      "nothingToShow": "Nothing to show",
+      "or": "Or",
+      "role": "Role",
+      "searchForABook": "Search for a book",
+      "section": "Section",
+      "seriesName": "Series name",
+      "serverNotConnected": "Server is not connected",
+      "showRowsPerPage": "Show {{pageSize}} rows",
+      "tableConfiguration": "Table configuration",
+      "visible": "Visible",
+      "seeAll": "See all",
+      "notifications": "Notifications",
+      "preview": "Preview",
+      "selectDirectory": "Select a Directory",
+      "showHiddenDirectories": "Show Hidden Directories",
+      "selectAThumbnail": "Select thumbnail",
+      "tags": "Tags",
+      "write": "Write"
+    },
+    "epubReaderControls": {
+      "bookOverviewTitle": "Book Overview",
+      "decreaseFontSize": "Decrease font size",
+      "decreaseLineHeight": "Decrease line height",
+      "fontPreviewCap": "Live font preview is capped at 50px",
+      "increaseFontSize": "Increase font size",
+      "increaseLineHeight": "Increase line height"
+    },
+    "filters": {
+      "applyFilters": "Apply filters",
+      "clearFilters": "Clear filters",
+      "configureFilters": "Configure filters",
+      "configureUrlFilters": "Configure URL filters",
+      "notImplemented": "Not implemented yet",
+      "perPage": "per page",
+      "urlFiltersDescription": "Adjust the filters applied to the current view",
+      "useOptionsToNarrowSearch": "Use the options below to narrow your search"
+    },
+    "markdownEditor": {
+      "addSpoiler": "Add spoiler",
+      "tagUser": "Tag a user"
+    },
+    "notFound": {
+      "description": "The page you are looking for does not seem to exist!",
+      "reportIssue": "Report an issue"
+    },
+    "pdfViewer": {
+      "downloadDirect": "to attempt downloading it directly.",
+      "loadFailed": "PDF failed to load."
+    },
+    "search": {
+      "functionalityUnavailable": "This functionality isn't available right now"
+    },
+    "seriesSettingsScene": {
+      "metadataDescription": "Extra information about your series",
+      "metadata": "Metadata",
+      "analysis": "Analysis",
+      "thumbnail": "Thumbnail",
+      "underDevelopment": "Series management is currently under development and has very limited functionality",
+      "analysisDescription": "Re-analyze this series to update metadata from its files",
+      "analyzeButton": "Analyze series",
+      "analyzeTooltip": "Analyze this series",
+      "analysisInProgress": "Analysis already in progress",
+      "thumbnailDescription": "Change the cover image for this series",
+      "tagsDescription": "Assign tags to this series"
+    },
+    "serverStatusOverlay": {
+      "changeServerUrl": "to change your server URL.",
+      "checkConnection": "Please check your internet connection.",
+      "clickHere": "Click here"
+    },
+    "stackedSeriesCard": {
+      "seriesMissing": "Series Missing"
+    },
+    "tableColumnConfiguration": {
+      "description": "Adjust which columns are displayed in book-exploration tables",
+      "dropColumnsHere": "Drop columns here",
+      "moveToHidden": "Move to hidden",
+      "moveToVisible": "Move to visible"
+    },
+    "tableColumnsDrawer": {
+      "bookColumnsDescription": "This only affects the nested book table(s)",
+      "chooseColumns": "Choose which columns to display or hide",
+      "enableMultiSort": "Enable multi-sort",
+      "groupColumnsDescription": "This only affects the parent table by which books are grouped",
+      "multiSortDescription": "Sorting by a column removes the previous sort. This setting allows combining them, instead",
+      "selectAtLeastOneColumn": "You must select at least one column"
+    },
+    "thumbnailDropdown": {
+      "label": "Select Thumbnail",
+      "options": {
+        "selectFromBooks": "Select from Books",
+        "uploadImage": "Upload Image"
+      },
+      "uploadImage": {
+        "emptyState": "A preview of your image will appear here",
+        "prompt": "Drop image here or click to select",
+        "remove": "Remove Image",
+        "fileTooLarge": "File Too Large",
+        "onlyOneFile": "Only one file is allowed",
+        "noFile": "No file was provided"
+      }
+    },
+    "tagFilter": {
+      "title": "Filter by tags",
+      "searchPlaceholder": "Search tags",
+      "clearFilters": "Clear filters",
+      "applyFilters": "Apply filters",
+      "noMatchingTags": "No matching tags",
+      "emptyLibrary": "This library has no tags yet"
+    },
+    "topBar": {
+      "libraries": {
+        "noLibrariesYet": "You don't have any libraries yet"
+      }
+    },
+    "userMenu": {
+      "logout": "Logout",
+      "logoutFailed": "There was an error logging you out. Please try again."
     },
     "userPermissions": {
       "ACCESS_API_KEYS": {
@@ -3141,6 +3962,9 @@
         "month": "Month",
         "dateRange": "{{startDate}} - {{endDate}}"
       },
+      "folders": "Folders",
+      "nextStep": "Next step",
+      "xBooks": "{{count}} 本书",
       "yes": "Yes"
     },
     "libraryType": {
@@ -3629,6 +4453,11 @@
           "label": "Token",
           "placeholder": "Raw Token"
         },
+        "label": "认证",
+        "default": {
+          "label": "登录",
+          "description": "访问内容时将提示您登录"
+        },
         "basic": "Basic"
       },
       "catalogUrl": "Catalog URL",
@@ -3650,6 +4479,17 @@
       },
       "networking": "Networking",
       "advancedOptions": "Advanced Options",
+      "addServer": {
+        "title": "添加服务器",
+        "subtitle": "配置新服务器以访问您的内容"
+      },
+      "editServer": {
+        "title": "编辑服务器",
+        "subtitle": "编辑服务器"
+      },
+      "enableOPDS": "启用 OPDS",
+      "primaryUrlDescription": "Stump 服务器的 URL",
+      "primaryUrlPlaceholder": "https://stump.example.com",
       "name": {
         "label": "Name",
         "description": "A friendly name to identify this server",

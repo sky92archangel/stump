@@ -10,6 +10,7 @@ import { SeriesMetadataEditor } from '@/components/series/metadata'
 import SeriesTagEditor from '@/components/series/SeriesTagEditor'
 import { SettingsSection } from '@/components/sharedLayout'
 import { useAppContext } from '@/context'
+import { useTranslate } from '@/hooks/useTranslate'
 import { usePaths } from '@/paths'
 
 const query = graphql(`
@@ -39,6 +40,7 @@ export default function SeriesSettingsScene() {
 	const { sdk } = useSDK()
 	const { series } = useSeriesContext()
 	const { checkPermission } = useAppContext()
+	const { t } = useTranslate()
 	const paths = usePaths()
 	const navigate = useNavigate()
 
@@ -74,8 +76,8 @@ export default function SeriesSettingsScene() {
 			)}
 
 			<SettingsSection
-				title="Metadata"
-				description="Extra information about your series"
+				title={t('librarySettingsScene.sidebar.integrations.metadata')}
+				description={t('seriesSettingsScene.metadataDescription')}
 				actions={
 					checkPermission(UserPermission.EditMetadata) && (
 						<ResetMetadata onConfirmReset={handleResetMetadata} />

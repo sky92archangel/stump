@@ -6,6 +6,7 @@ import { useCallback } from 'react'
 import { toast } from 'sonner'
 
 import TagSelect, { TagOption } from '@/components/TagSelect'
+import { useTranslate } from '@/hooks/useTranslate'
 
 // TODO(ui): i dislike the current ui for editing tags in general, there's gotta be something better than a
 // combo box. spacedrive did a sort of grid but that doesn't quite scale either ig
@@ -28,6 +29,7 @@ type Props = {
 }
 
 export default function BookTagEditor({ mediaId, tags }: Props) {
+	const { t } = useTranslate()
 	const { sdk } = useSDK()
 	const client = useQueryClient()
 
@@ -65,9 +67,9 @@ export default function BookTagEditor({ mediaId, tags }: Props) {
 	return (
 		<div className="gap-y-2 flex flex-col">
 			<div>
-				<Heading size="sm">Tags</Heading>
+				<Heading size="sm">{t('settingsScene.sidebar.management.tags')}</Heading>
 				<Text size="sm" variant="muted">
-					Assign tags to this book
+					{t('bookManagementScene.tagsDescription')}
 				</Text>
 			</div>
 

@@ -80,8 +80,8 @@ export default function BookSettingsScene() {
 				{(checkPermission(UserPermission.EditMetadata) ||
 					checkPermission(UserPermission.MetadataFetchRecordManage)) && (
 					<SettingsSection
-						title="Metadata"
-						description="Extra information about this book"
+						title={t('bookManagementScene.metadata')}
+						description={t('bookManagementScene.metadataDescription')}
 						actions={
 							checkPermission(UserPermission.MetadataFetchRecordManage) && (
 								<Button variant="outline" size="sm" onClick={() => setIsSearchingMetadata(true)}>

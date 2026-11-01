@@ -13,6 +13,7 @@ import { FieldValues, useForm } from 'react-hook-form'
 import z from 'zod'
 
 import { useSeriesContextSafe } from '@/components/series/context'
+import { useTranslate } from '@/hooks/useTranslate'
 
 import { useFilterContext } from '..'
 import AgeRatingFilter from './AgeRatingFilter'
@@ -62,6 +63,7 @@ export type MediaFilterFormSchema = z.infer<typeof schema>
 
 export default function MediaFilterForm() {
 	const { filters: filtersInput, setFilters } = useFilterContext()
+	const { t, translate } = useTranslate()
 	const filters = useMemo(() => (filtersInput || {}) as MediaFilterInput, [filtersInput])
 
 	const seriesContext = useSeriesContextSafe()
@@ -215,7 +217,7 @@ export default function MediaFilterForm() {
 		>
 			{!!seriesContext && (
 				<CheckBox
-					label="Only show options available from series"
+					label={t('mediaFilterForm.labels.onlyFromSeries')}
 					checked={onlyFromSeries}
 					onClick={() => setOnlyFromSeries((prev) => !prev)}
 				/>
@@ -229,7 +231,7 @@ export default function MediaFilterForm() {
 				<>
 					<GenericFilterMultiselect
 						name="metadata.genre"
-						label="Genre"
+						label={translate('shared.bookMetadata.genre')}
 						options={
 							data?.genres.map((genre) => ({ label: genre, value: genre.toLowerCase() })) || []
 						}
@@ -237,7 +239,7 @@ export default function MediaFilterForm() {
 
 					<GenericFilterMultiselect
 						name="metadata.writer"
-						label="Writer"
+						label={t('mediaFilterForm.labels.writer')}
 						options={
 							data?.writers.map((writer) => ({ label: writer, value: writer.toLowerCase() })) || []
 						}
@@ -245,7 +247,7 @@ export default function MediaFilterForm() {
 
 					<GenericFilterMultiselect
 						name="metadata.penciller"
-						label="Penciller"
+						label={t('mediaFilterForm.labels.penciller')}
 						options={
 							data?.pencillers.map((penciller) => ({
 								label: penciller,
@@ -256,7 +258,7 @@ export default function MediaFilterForm() {
 
 					<GenericFilterMultiselect
 						name="metadata.colorist"
-						label="Colorist"
+						label={translate('shared.bookMetadata.colorist')}
 						options={
 							data?.colorists.map((colorist) => ({
 								label: colorist,
@@ -267,7 +269,7 @@ export default function MediaFilterForm() {
 
 					<GenericFilterMultiselect
 						name="metadata.letterer"
-						label="Letterer"
+						label={t('mediaFilterForm.labels.letterer')}
 						options={
 							data?.letterers.map((letterer) => ({
 								label: letterer,
@@ -278,7 +280,7 @@ export default function MediaFilterForm() {
 
 					<GenericFilterMultiselect
 						name="metadata.inker"
-						label="Inker"
+						label={t('mediaFilterForm.labels.inker')}
 						options={
 							data?.inkers.map((inker) => ({ label: inker, value: inker.toLowerCase() })) || []
 						}
@@ -286,7 +288,7 @@ export default function MediaFilterForm() {
 
 					<GenericFilterMultiselect
 						name="metadata.publisher"
-						label="Publisher"
+						label={translate('shared.bookMetadata.publisher')}
 						options={
 							data?.publishers.map((publisher) => ({
 								label: publisher,
@@ -297,7 +299,7 @@ export default function MediaFilterForm() {
 
 					<GenericFilterMultiselect
 						name="metadata.editor"
-						label="Editor"
+						label={t('mediaFilterForm.labels.editor')}
 						options={
 							data?.editors.map((editor) => ({ label: editor, value: editor.toLowerCase() })) || []
 						}
@@ -305,7 +307,7 @@ export default function MediaFilterForm() {
 
 					<GenericFilterMultiselect
 						name="metadata.character"
-						label="Character"
+						label={t('mediaFilterForm.labels.character')}
 						options={
 							data?.characters.map((character) => ({
 								label: character,

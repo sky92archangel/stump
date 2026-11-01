@@ -9,6 +9,7 @@ import { HelpCircle } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
 import Table from '@/components/table/Table'
+import { useTranslate } from '@/hooks/useTranslate'
 
 import DeleteUserModal from './DeleteUserModal'
 import InspectUserSlideOver from './InspectUserSlideOver'
@@ -67,6 +68,8 @@ export const prefetchUsersTable = async (sdk: Api, client: QueryClient) =>
 export type User = NonNullable<NonNullable<UserTableQuery>['users']>['nodes'][number]
 
 export default function UserTable() {
+	const { t } = useTranslate()
+
 	const [pagination, setPagination] = useState<PaginationState>({
 		pageIndex: 0,
 		pageSize: 10,
@@ -103,7 +106,7 @@ export default function UserTable() {
 
 	const columns = useMemo(
 		() => [
-			...baseColumns,
+			...buildBaseColumns(t),
 			columnHelper.display({
 				cell: ({ row: { original } }) => (
 					<div className="md:w-2 inline-flex items-end">
@@ -118,7 +121,7 @@ export default function UserTable() {
 				size: 28,
 			}),
 		],
-		[],
+		[t],
 	)
 
 	return (
@@ -149,18 +152,24 @@ export default function UserTable() {
 
 const columnHelper = createColumnHelper<User>()
 
-const baseColumns = [
+const buildBaseColumns = (t: (key: string) => string) => [
 	columnHelper.accessor('username', {
 		cell: ({ row: { original: user } }) => <UsernameRow {...user} />,
-		header: 'User',
+		header: t('settingsScene.server/users.userTable.table.user'),
 	}),
 	columnHelper.display({
 		cell: ({
 			row: {
 				original: { isServerOwner },
 			},
-		}) => <Text size="sm">{isServerOwner ? 'Server Owner' : 'Member'}</Text>,
-		header: 'Role',
+		}) => (
+			<Text size="sm">
+				{isServerOwner
+					? t('settingsScene.server/users.userTable.table.serverOwner')
+					: t('createOrUpdateBookClubForm.fields.member_role_spec.member.label')}
+			</Text>
+		),
+		header: t('settingsScene.server/users.userTable.table.role'),
 		id: 'isServerOwner',
 	}),
 	columnHelper.accessor('createdAt', {
@@ -173,7 +182,7 @@ const baseColumns = [
 				{intlFormat(new Date(createdAt), { month: 'long', day: 'numeric', year: 'numeric' })}
 			</Text>
 		),
-		header: 'Created at',
+		header: t('settingsScene.server/users.userTable.table.createdAt'),
 	}),
 	columnHelper.accessor('lastLogin', {
 		cell: ({
@@ -184,10 +193,10 @@ const baseColumns = [
 			<Text size="sm" variant="muted">
 				{lastLogin
 					? intlFormat(new Date(lastLogin), { month: 'long', day: 'numeric', year: 'numeric' })
-					: 'Never'}
+					: t('settingsScene.server/users.userTable.table.never')}
 			</Text>
 		),
-		header: 'Last login',
+		header: t('settingsScene.server/users.userTable.table.lastLogin'),
 	}),
 	columnHelper.display({
 		cell: ({ row: { original } }) => (
@@ -197,8 +206,8 @@ const baseColumns = [
 		),
 		header: () => (
 			<div className="gap-2 flex w-full items-center">
-				<span>Sessions</span>
-				<ToolTip content="The number of non-expired login sessions for this user">
+				<span>{t('settingsScene.server/users.userTable.sessions')}</span>
+				<ToolTip content={t('settingsScene.server/users.userTable.sessionsTooltip')}>
 					<HelpCircle className="h-3 w-3" />
 				</ToolTip>
 			</div>
@@ -209,10 +218,12 @@ const baseColumns = [
 	columnHelper.display({
 		cell: ({ row: { original } }) => (
 			<Badge size="xs" variant={original.isLocked ? 'error' : 'success'}>
-				{original.isLocked ? 'Locked' : 'Active'}
+				{original.isLocked
+					? t('settingsScene.server/users.userTable.table.locked')
+					: t('settingsScene.server/users.userTable.table.active')}
 			</Badge>
 		),
-		header: 'Status',
+		header: t('settingsScene.server/jobs.sections.history.table.columns.status'),
 		id: 'isLocked',
 		size: 100,
 	}),

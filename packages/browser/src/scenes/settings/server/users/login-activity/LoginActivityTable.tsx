@@ -14,6 +14,7 @@ import { Fingerprint, Slash } from 'lucide-react'
 import { useState } from 'react'
 
 import { Table } from '@/components/table'
+import { useTranslate } from '@/hooks/useTranslate'
 
 import UsernameRow from '../user-table/UsernameRow'
 
@@ -47,6 +48,7 @@ export const prefetchLoginActivity = async (sdk: Api, client: QueryClient) =>
 
 export default function LoginActivityTable() {
 	const { sdk } = useSDK()
+	const { t } = useTranslate()
 	const {
 		data: { loginActivity },
 	} = useSuspenseGraphQL(query, sdk.cacheKey('loginActivity'))
@@ -68,9 +70,9 @@ export default function LoginActivityTable() {
 					</div>
 
 					<div className="text-center">
-						<Text>No login activity</Text>
+						<Text>{t('settingsScene.server/users.loginActivity.empty.heading')}</Text>
 						<Text size="sm" variant="muted">
-							You cleared this, didn&#39;t you?
+							{t('settingsScene.server/users.loginActivity.empty.description')}
 						</Text>
 					</div>
 				</div>
@@ -83,7 +85,7 @@ export default function LoginActivityTable() {
 		<Card>
 			<Table
 				data={loginActivity || []}
-				columns={baseColumns}
+				columns={baseColumns(t)}
 				fullWidth
 				options={{
 					defaultColumn: {
@@ -103,9 +105,10 @@ export default function LoginActivityTable() {
 	)
 }
 
+const LOCALE_BASE = 'settingsScene.server/users.loginActivity'
 const columnHelper = createColumnHelper<LoginActivity>()
 
-const baseColumns = [
+const baseColumns = (t: (key: string) => string) => [
 	columnHelper.display({
 		cell: ({
 			row: {
@@ -117,7 +120,7 @@ const baseColumns = [
 			}
 			return <UsernameRow {...user} />
 		},
-		header: 'User',
+		header: t(`${LOCALE_BASE}.columns.user`),
 		id: 'user',
 		size: 100,
 	}),
@@ -136,7 +139,7 @@ const baseColumns = [
 				</Text>
 			)
 		},
-		header: 'Timestamp',
+		header: t(`${LOCALE_BASE}.columns.timestamp`),
 		size: 100,
 	}),
 	columnHelper.accessor('ipAddress', {
@@ -145,7 +148,7 @@ const baseColumns = [
 				{activity.ipAddress}
 			</Text>
 		),
-		header: 'IP address',
+		header: t(`${LOCALE_BASE}.columns.ipAddress`),
 		size: 100,
 	}),
 	columnHelper.accessor('userAgent', {
@@ -159,15 +162,17 @@ const baseColumns = [
 				{activity.userAgent}
 			</Text>
 		),
-		header: 'User-agent',
+		header: t(`${LOCALE_BASE}.columns.userAgent`),
 	}),
 	columnHelper.display({
 		cell: ({ row: { original: activity } }) => (
 			<Badge variant={activity.authenticationSuccessful ? 'success' : 'error'} size="xs">
-				{activity.authenticationSuccessful ? 'Success' : 'Failure'}
+				{activity.authenticationSuccessful
+					? t(`${LOCALE_BASE}.columns.success`)
+					: t(`${LOCALE_BASE}.columns.failure`)}
 			</Badge>
 		),
-		header: 'Auth result',
+		header: t(`${LOCALE_BASE}.columns.authResult`),
 		id: 'authenticationSuccessful',
 	}),
 ] as ColumnDef<LoginActivity>[]
