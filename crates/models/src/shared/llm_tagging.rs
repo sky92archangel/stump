@@ -196,4 +196,37 @@ mod tests {
 		assert_eq!(normalize_tag_name("  a   b ").as_deref(), Some("a b"));
 		assert_eq!(normalize_tag_name("   "), None);
 	}
+
+	#[test]
+	fn test_normalize_tag_caps_length() {
+		let long = "x".repeat(120);
+		let normalized = normalize_tag_name(&long).expect("should not be empty");
+		assert_eq!(normalized.chars().count(), 50);
+	}
+
+	#[test]
+	fn test_normalize_tag_key_is_comparison_key() {
+		// Case, padding, and repeated whitespace must all collapse to the same key
+		assert_eq!(normalize_tag_key("Sci-Fi"), normalize_tag_key("  sci-fi "));
+		assert_eq!(normalize_tag_key("SCI-FI"), normalize_tag_key("Sci-Fi"));
+		assert_eq!(normalize_tag_key("a \t  b"), "a b");
+		assert_eq!(normalize_tag_key("   "), "");
+	}
+
+	#[test]
+	fn test_assignment_and_suggestion_deserialize_with_defaults() {
+		// LLM output is camelCase and may omit optional fields
+		let assignment: LlmLibraryTagAssignment =
+			serde_json::from_value(serde_json::json!({ "mediaId": "abc", "tags": ["history"] }))
+				.expect("assignment should deserialize");
+		assert_eq!(assignment.media_id, "abc");
+		assert_eq!(assignment.tags, vec!["history".to_string()]);
+
+		let suggestion: LlmSuggestedTag =
+			serde_json::from_value(serde_json::json!({ "name": "history", "confidence": 0.8 }))
+				.expect("suggestion should deserialize without reason");
+		assert_eq!(suggestion.name, "history");
+		assert_eq!(suggestion.confidence, 0.8);
+		assert!(suggestion.reason.is_none());
+	}
 }
